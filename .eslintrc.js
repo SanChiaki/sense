@@ -99,7 +99,7 @@ module.exports = {
     "keyword-spacing": 2, //关键字前后的空格
     "no-var": 2, //使用let和const代替var
     "semi": [0, "always"], //强制语句分号结尾
-    "indent": ["error", 4], //开头的缩进风格
+    "indent": ["error", 2], //开头的缩进风格
     "linebreak-style": 0, //换行风格
     "eol-last": 0, //文件末尾是否要存在一行空行
     "no-restricted-globals": 0, //禁止使用全局变量
