@@ -9,6 +9,14 @@ export default new Router({
       path: '/',
       name: 'index',
       component: () => import('@/components/index.vue')
+    }, {
+      path: '/button',
+      name: 'button',
+      component: () => import('@/view/button')
+    }, {
+      path: '/checkbox',
+      name: 'checkbox',
+      component: () => import('@/view/checkbox')
     }
   ]
 })
