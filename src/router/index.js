@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: () => import('@/components/index.vue')
+      component: () => import('@/view/index')
     }, {
       path: '/button',
       name: 'button',
