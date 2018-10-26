@@ -25,7 +25,8 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
-    "comma-dangle": ["error", "never"], //是否允许对象中出现结尾逗号
+    "no-trailing-spaces": 0, // 尾部是否允許多餘的空格
+    "comma-dangle": 0, //是否允许对象中出现结尾逗号
     "no-cond-assign": 2, //条件语句的条件中不允许出现赋值运算符
     "no-dupe-args": 2, //函数定义的时候不允许出现重复的参数
     "no-dupe-keys": 2, //对象中不允许出现重复的键
