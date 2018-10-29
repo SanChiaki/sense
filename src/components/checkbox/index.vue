@@ -6,13 +6,18 @@
       indeterminate && !checkVal && 'ss-checkbox__indeterminate'
     ]"
   >
-    <span class="ss-checkbox-left">
+    <span class="ss-checkbox-left"
+      :class="[
+        focus && 'is-focus'
+      ]">
       <input class="ss-checkbox-input"
         :disabled="disabled"
         @change="handleChange"
         type="checkbox"
         v-model="checkVal"
         :name="name"
+        @focus="focus = true"
+        @blur="focus = false"
       >
       <span class="ss-checkbox-inner"></span>
     </span><span v-if="$slots.default">
@@ -33,7 +38,8 @@ export default {
   },
   data() {
     return {
-      checkVal: false
+      checkVal: false,
+      focus: false
     }
   },
   computed: {
@@ -106,6 +112,11 @@ export default {
     top: 2px;
     & + span {
       padding: 0 8px;
+    }
+    &.is-focus {
+      .ss-checkbox-inner {
+        border-color: $mc;
+      }
     }
   }
   .ss-checkbox-input {
