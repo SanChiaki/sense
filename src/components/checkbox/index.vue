@@ -2,7 +2,8 @@
   <label class="ss-checkbox"
     :class="[
       checkVal && `ss-checkbox__checked`,
-      disabled && `ss-checkbox__disabled`
+      disabled && `ss-checkbox__disabled`,
+      indeterminate && !checkVal && 'ss-checkbox__indeterminate'
     ]"
   >
     <span class="ss-checkbox-left">
@@ -11,6 +12,7 @@
         @change="handleChange"
         type="checkbox"
         v-model="checkVal"
+        :name="name"
       >
       <span class="ss-checkbox-inner"></span>
     </span><span v-if="$slots.default">
@@ -26,6 +28,7 @@ export default {
     disabled: Boolean,
     checked: Boolean,
     defaultChecked: Boolean,
+    indeterminate: Boolean,
     name: String
   },
   data() {
@@ -58,6 +61,22 @@ export default {
         border-color: $mc;
       }
     }
+    &.ss-checkbox__indeterminate {
+      .ss-checkbox-inner {
+        background-color: $mc;
+        border-color: $mc;
+        &:before {
+          content: '';
+          position: absolute;
+          left: 3px;
+          top: 6px;
+          width: 8px;
+          height: 2px;
+          background: #fff;
+          transform: scale(1);
+        }
+      }
+    }
     &.ss-checkbox__checked {
       .ss-checkbox-inner {
         background-color: $mc;
@@ -69,6 +88,7 @@ export default {
     }
     &.ss-checkbox__disabled {
       color: #B2B2B2;
+      cursor: not-allowed;
       .ss-checkbox-inner {
         border-color: #eee;
       }
@@ -107,10 +127,10 @@ export default {
     border: 1px solid #B2B2B2;
     transition: .1s ease-in-out;
     &:before {
-      content: ' ';
+      content: '';
       position: absolute;
       left: 4px;
-      top: 2px;
+      top: 1px;
       width: 6px;
       height: 9px;
       border: 2px solid #fff;

@@ -26,6 +26,24 @@
           <ss-checkbox v-model="checked" disabled>checkbox</ss-checkbox>
         </div>
       </div>
+      <div class="item">
+        <div class="item-title">多选未全选中状态</div>
+        <div class="item-sense">
+          <ss-checkbox v-model="noCheck" :indeterminate="isIndeterminate">checkbox</ss-checkbox>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-title">多选全选中状态</div>
+        <div class="item-sense">
+          <ss-checkbox v-model="checked" :indeterminate="isIndeterminate">checkbox</ss-checkbox>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-title">多选全未选中状态</div>
+        <div class="item-sense">
+          <ss-checkbox v-model="noCheck" :indeterminate="false">checkbox</ss-checkbox>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +58,8 @@ export default {
   data() {
     return {
       checked: true,
-      noCheck: false
+      noCheck: false,
+      isIndeterminate: true
     }
   }
 }
