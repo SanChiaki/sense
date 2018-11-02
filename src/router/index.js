@@ -17,6 +17,14 @@ export default new Router({
       path: '/checkbox',
       name: 'checkbox',
       component: () => import('@/view/checkbox')
+    }, {
+      path: '/select',
+      name: 'select',
+      component: () => import('@/view/select')
+    }, {
+      path: '/input',
+      name: 'input',
+      component: () => import('@/view/input')
     }
   ]
 })
