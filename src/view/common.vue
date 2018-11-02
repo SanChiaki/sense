@@ -35,9 +35,13 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 20px;
+    .item + .item {
+      margin: 10px 0 0;
+    }
     .item-title {
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 30px;
     }
   }
 </style>
