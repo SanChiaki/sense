@@ -81,7 +81,7 @@ module.exports = {
     "no-shadow-restricted-names": 2, //js关键字和保留字不能作为函数名或者变量名
     "no-undef": 2, //不允许未声明的变量
     "no-undef-init": 2, //不允许初始化变量时给变量赋值undefined
-    "no-undefined": 2, //不允许把undefined当做标识符使用
+    "no-undefined": 0, //不允许把undefined当做标识符使用
     "no-unused-vars": [2, {"vars": "all", "args": "after-used"}], //不允许有声明后未使用的变量或者参数
     "brace-style": [2, "1tbs", { "allowSingleLine": false}], //大括号风格
     "camelcase": [2, {"properties": "never"}], //强制驼峰命名规则
