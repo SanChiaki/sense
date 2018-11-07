@@ -25,6 +25,10 @@ export default new Router({
       path: '/input',
       name: 'input',
       component: () => import('@/view/input')
+    }, {
+      path: '/tag',
+      name: 'tag',
+      component: () => import('@/view/tag')
     }
   ]
 })
