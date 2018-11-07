@@ -29,6 +29,10 @@ export default new Router({
       path: '/tag',
       name: 'tag',
       component: () => import('@/view/tag')
+    }, {
+      path: '/badge',
+      name: 'badge',
+      component: () => import('@/view/badge')
     }
   ]
 })
