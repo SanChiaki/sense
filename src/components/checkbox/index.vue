@@ -20,7 +20,8 @@
         @blur="focus = false"
       >
       <span class="ss-checkbox-inner"></span>
-    </span><span v-if="$slots.default">
+    </span>
+    <span class="ss-checkbox-text" v-if="$slots.default">
       <slot></slot>
     </span>
   </label>
@@ -61,6 +62,7 @@ export default {
     list-style: none;
     line-height: unset;
     user-select: none;
+    font-size: 0;
     cursor: pointer;
     &:hover, &:focus {
       .ss-checkbox-inner {
@@ -118,38 +120,41 @@ export default {
         border-color: $mc;
       }
     }
-  }
-  .ss-checkbox-input {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-  .ss-checkbox-inner {
-    display: inline-block;
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
-    border: 1px solid #B2B2B2;
-    transition: .1s ease-in-out;
-    &:before {
-      content: '';
+    .ss-checkbox-input {
       position: absolute;
-      left: 4px;
-      top: 1px;
-      width: 6px;
-      height: 9px;
-      border: 2px solid #fff;
-      border-left: 0;
-      border-top: 0;
-      transform: rotateZ(45deg) scale(0);
-      transition: .1s ease-in-out;
-      box-sizing: border-box;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      opacity: 0;
     }
+    .ss-checkbox-inner {
+      display: inline-block;
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      border: 1px solid #B2B2B2;
+      transition: .1s ease-in-out;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 1px;
+        width: 6px;
+        height: 9px;
+        border: 2px solid #fff;
+        border-left: 0;
+        border-top: 0;
+        transform: rotateZ(45deg) scale(0);
+        transition: .1s ease-in-out;
+        box-sizing: border-box;
+      }
+    }
+  }
+  .ss-checkbox-text {
+    font-size: 14px;
   }
 </style>
