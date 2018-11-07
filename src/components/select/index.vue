@@ -160,7 +160,6 @@ export default {
     changeMultipleHeight() {
       this.$nextTick(() => {
         this.multipleHeight = this.$refs.multiple.clientHeight
-        console.log(this.multipleHeight)
       })
     }
   }
