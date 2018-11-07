@@ -19,4 +19,15 @@ export default {
   body {
     font-size: 14px;
   }
+  [class^="icon-icon"], [class*=" icon-icon"] {
+    font-family: 'iconfont';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 </style>
