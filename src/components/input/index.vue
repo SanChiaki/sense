@@ -6,6 +6,7 @@
     ]"
   >
     <input class="ss-input-inner" 
+      ref="input"
       :type="type" 
       autocomplete="off" 
       :placeholder="placeholder || '请输入内容'" 
@@ -41,13 +42,20 @@ export default {
   },
   data() {
     return {
-      currentVal: this.value === undefined || this.value === null ? '' : this.value,
       isReverse: false
+    }
+  },
+  computed: {
+    currentVal() {
+      return this.value === undefined || this.value === null ? '' : this.value
     }
   },
   created() {
   },
   methods: {
+    focus() {
+      this.$refs.input.focus()
+    },
     handelFocus(e) {
       this.$emit('focus', e)
     },
@@ -75,6 +83,11 @@ export default {
         border-color: #c0c4cc;
       }
     }
+    &.is-focus {
+      .ss-input-inner {
+        border-color: $mc;
+      }
+    }
     &.ss-input__disabled {
       &:hover {
         .ss-input-inner {
@@ -86,6 +99,7 @@ export default {
         border-color: #e4e7ed;
         color: #c0c4cc;
         cursor: not-allowed;
+        user-select: none;
       }
     }
     &.ss-input__suffix {

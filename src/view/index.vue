@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      routes: ['button', 'checkbox', 'input', 'select']
+      routes: ['button', 'checkbox', 'input', 'select', 'tag']
     }
   },
   methods: {
