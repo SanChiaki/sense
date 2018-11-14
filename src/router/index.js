@@ -33,6 +33,10 @@ export default new Router({
       path: '/badge',
       name: 'badge',
       component: () => import('@/view/badge')
+    }, {
+      path: '/alert',
+      name: 'alert',
+      component: () => import('@/view/alert')
     }
   ]
 })
