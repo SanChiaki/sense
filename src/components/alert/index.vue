@@ -19,7 +19,7 @@
       <i 
         class='ss-alert-closebtn icon-icon-close' 
         v-show='closable' 
-        @click='close()'
+        @click='close'
       >
       </i>
     </div>
