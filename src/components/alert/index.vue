@@ -1,25 +1,29 @@
 <template>
-    <transition name='ss-alert-fade'>
-      <div>
-        <div 
-          class='ss-alert'
-          :class='[typeClass]'
-          v-show='visible'
-        >
-          <i v-if='showIcon' 
-             class='ss-alert-status-icon' 
-             :class='[statusClass]'
-             :style='{fontSize: iconSize && iconSize}'
-          ></i>
-          <span class='ss-alert-title'
-                :style='{width: titleWidth && titleWidth}'
-          >
-                {{ title }}
-          </span>
-          <i class='ss-alert__closebtn icon-icon_close' v-show='closable' @click='close()'></i>
-        </div>
-      </div>
-    </transition>
+  <transition name='ss-alert-fade'>
+    <div 
+      class='ss-alert'
+      :class='[ typeClass,  closable ? closableClass : null ]'
+      v-show='visible'
+      :style='{width: width}'
+    >
+      <i 
+        v-if='showIcon' 
+        class='ss-alert-status-icon' 
+        :class='[ statusClass ]'
+        :style='{ fontSize: iconSize }'
+      >
+      </i>
+      <span class='ss-alert-title'>
+        {{ title }}
+      </span>
+      <i 
+        class='ss-alert-closebtn icon-icon-close' 
+        v-show='closable' 
+        @click='close()'
+      >
+      </i>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -48,7 +52,7 @@ export default {
       type: String,
       default: null
     },
-    titleWidth: {
+    width: {
       type: String,
       default: null
     }
@@ -72,7 +76,10 @@ export default {
       return `ss-alert__${this.type}`;
     },
     statusClass() {
-      return `icon-icon_status_${this.type}`;
+      return `icon-icon-status__${this.type}`;
+    },
+    closableClass() {
+      return 'ss-alert__closable';
     }
   }
 };
@@ -84,7 +91,7 @@ export default {
   opacity: 0;
 }
 .ss-alert {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   position: relative;
   box-sizing: border-box;
@@ -94,6 +101,8 @@ export default {
   border-radius: 2px;
   transition: opacity 0.3s;
   font-size: 0;
+  width: 560px;
+
   &.ss-alert__primary {
     border-color: #89b4fa;
     background-color: rgba(42, 117, 237, 0.1);
@@ -122,13 +131,19 @@ export default {
       color: rgb(251, 97, 97);
     }
   }
-  .ss-alert__closebtn {
+
+  &.ss-alert__closable {
+    padding: 10px 30px 10px 10px;
+  }
+  .ss-alert-closebtn {
+    position: absolute;
     cursor: pointer;
-    align-self: flex-start;
-    margin-left: 10px;
+    top: 12px;
+    right: 8px;
     color: #b2b2b2;
     font-size: 16px;
   }
+
   .ss-alert-status-icon {
     margin: 0 10px 0 5px;
     font-size: 14px;
@@ -137,7 +152,6 @@ export default {
     display: inline-block;
     line-height: 20px;
     font-size: 14px;
-    width: 560px;
   }
 }
 </style>

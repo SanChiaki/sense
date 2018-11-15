@@ -1,7 +1,7 @@
 <template>
     <div class='margin-container'>
       <ss-alert 
-        title='警告样式'
+        title='警告样式 - 可关闭'
         type='warning'
         closable
       >
@@ -38,10 +38,28 @@
       </ss-alert>
 
       <ss-alert 
-        title='调整文本区域所占宽度'
+        title='调整宽度'
         type='primary'
         show-icon
-        title-width='120px'
+        width='60%'
+      >
+      </ss-alert>
+
+      <ss-alert 
+        title='多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本'
+        type='primary'
+      >
+      </ss-alert>
+      <ss-alert 
+        title='多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本'
+        type='primary'
+        show-icon
+      >
+      </ss-alert>
+      <ss-alert 
+        title='多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本多行文本'
+        type='primary'
+        closable
       >
       </ss-alert>
 
