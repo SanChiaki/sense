@@ -45,6 +45,10 @@ export default new Router({
       path: '/pagination',
       name: 'pagination',
       component: () => import('@/view/pagination')
+    }, {
+      path: '/steps',
+      name: 'steps',
+      component: () => import('@/view/steps')
     }
   ]
 })
