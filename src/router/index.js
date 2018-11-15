@@ -33,6 +33,14 @@ export default new Router({
       path: '/badge',
       name: 'badge',
       component: () => import('@/view/badge')
+    }, {
+      path: '/radio',
+      name: 'radio',
+      component: () => import('@/view/radio')
+    }, {
+      path: '/pagination',
+      name: 'pagination',
+      component: () => import('@/view/pagination')
     }
   ]
 })
