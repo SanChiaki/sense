@@ -4,7 +4,7 @@
       class='ss-alert'
       :class='[ typeClass,  closable ? closableClass : null ]'
       v-show='visible'
-      :style='{width: width}'
+      :style='{ width: width }'
     >
       <i 
         v-if='showIcon' 
@@ -19,7 +19,7 @@
       <i 
         class='ss-alert-closebtn icon-icon-close' 
         v-show='closable' 
-        @click='close()'
+        @click='close'
       >
       </i>
     </div>
