@@ -37,6 +37,14 @@ export default new Router({
       path: '/alert',
       name: 'alert',
       component: () => import('@/view/alert')
+    }, {
+      path: '/radio',
+      name: 'radio',
+      component: () => import('@/view/radio')
+    }, {
+      path: '/pagination',
+      name: 'pagination',
+      component: () => import('@/view/pagination')
     }
   ]
 })

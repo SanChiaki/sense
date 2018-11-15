@@ -8,8 +8,8 @@
     <div class="ss-select-multiple" v-if="multiple" ref="multiple">
       <ss-tag type="info" 
         v-for="item in selectedObject" 
-        :key="getItemValue(item)">
-        {{ getItemLabel(item) }}
+        :key="getValue(item)">
+        {{ getLabel(item) }}
       </ss-tag>
     </div>
     <ss-input :class="[
@@ -45,10 +45,10 @@
           ]"
           @mouseenter="hoverItem(index)"
           v-for="(item, index) in list" 
-          :key="getItemValue(item)"
+          :key="getValue(item)"
           @click.stop="handleItemClick(item, index)"
         >
-          {{ getItemLabel(item) }}
+          {{ getLabel(item) }}
         </li>
       </ul>
       <ul class="ss-select-dropdown-list ss-select-dropdown-list__empty"
@@ -63,6 +63,8 @@
 <script>
 import SsInput from '@/components/input'
 import SsTag from '@/components/tag'
+
+import { getLabel, getValue } from '@/utils/item'
 
 export default {
   components: {
@@ -91,28 +93,11 @@ export default {
       multipleHeight: null
     }
   },
-  computed: {
-    isItemObject() {
-      const item = this.list[0]
-      if (item && Object.prototype.toString.call(item) === '[object Object]') {
-        return true
-      }
-      return false
-    }
+  created() {
+    this.getLabel = getLabel
+    this.getValue = getValue
   },
   methods: {
-    getItemLabel(item) {
-      if (this.isItemObject) {
-        return item.label || item.value
-      }
-      return item
-    },
-    getItemValue(item) {
-      if (this.isItemObject) {
-        return item.value
-      }
-      return item
-    },
     handleInputFocus() {
       this.isFocus = true
     },
