@@ -12,7 +12,7 @@
              :style='{fontSize: iconSize && iconSize}'
           ></i>
           <span class='ss-alert-title'
-                :style='{width: titleWidth}'
+                :style='{width: titleWidth && titleWidth}'
           >
                 {{ title }}
           </span>
@@ -50,7 +50,7 @@ export default {
     },
     titleWidth: {
       type: String,
-      default: '560px'
+      default: null
     }
   },
 
@@ -137,6 +137,7 @@ export default {
     display: inline-block;
     line-height: 20px;
     font-size: 14px;
+    width: 560px;
   }
 }
 </style>

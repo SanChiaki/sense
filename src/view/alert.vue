@@ -33,7 +33,7 @@
         title='调整图标大小'
         type='primary'
         show-icon
-        icon-size='40px'
+        icon-size='24px'
       >
       </ss-alert>
 
@@ -41,7 +41,7 @@
         title='调整文本区域所占宽度'
         type='primary'
         show-icon
-        title-width='80px'
+        title-width='120px'
       >
       </ss-alert>
 
