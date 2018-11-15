@@ -1,22 +1,22 @@
 <template>
-    <transition name="ss-alert-fade">
+    <transition name='ss-alert-fade'>
       <div>
         <div 
-          class="ss-alert"
-          :class="[typeClass]"
-          v-show="visible"
+          class='ss-alert'
+          :class='[typeClass]'
+          v-show='visible'
         >
-          <i v-if="showIcon" 
-             class="ss-alert-status-icon" 
-             :class="[statusClass]"
-             :style="{fontSize: iconSize}"
+          <i v-if='showIcon' 
+             class='ss-alert-status-icon' 
+             :class='[statusClass]'
+             :style='{fontSize: iconSize && iconSize}'
           ></i>
-          <span class="ss-alert-title"
-                :style="{width: titleWidth}"
+          <span class='ss-alert-title'
+                :style='{width: titleWidth}'
           >
                 {{ title }}
           </span>
-          <i class="ss-alert__closebtn icon-icon_close" v-show="closable" @click="close()"></i>
+          <i class='ss-alert__closebtn icon-icon_close' v-show='closable' @click='close()'></i>
         </div>
       </div>
     </transition>
@@ -24,16 +24,17 @@
 
 <script>
 export default {
-  name: "SsAlert",
+  name: 'SsAlert',
 
   props: {
     title: {
       type: String,
-      default: ""
+      required: true,
+      default: ''
     },
     type: {
       type: String,
-      default: "primary"
+      default: 'primary'
     },
     closable: {
       type: Boolean,
@@ -45,11 +46,11 @@ export default {
     },
     iconSize: {
       type: String,
-      default: "14px"
+      default: null
     },
     titleWidth: {
       type: String,
-      default: "560px"
+      default: '560px'
     }
   },
 
@@ -62,7 +63,7 @@ export default {
   methods: {
     close() {
       this.visible = false;
-      this.$emit("close");
+      this.$emit('close');
     }
   },
 
@@ -77,7 +78,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .ss-alert-fade-enter,
 .ss-alert-fade-leave-active {
   opacity: 0;
@@ -130,6 +131,7 @@ export default {
   }
   .ss-alert-status-icon {
     margin: 0 10px 0 5px;
+    font-size: 14px;
   }
   .ss-alert-title {
     display: inline-block;
