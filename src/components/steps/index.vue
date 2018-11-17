@@ -3,7 +3,7 @@
     class='ss-steps'
     :class="[ stepsDirection ]"
   >
-      <slot></slot>
+    <slot></slot>
   </div>
 </template>
 
