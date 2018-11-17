@@ -34,10 +34,6 @@ export default new Router({
       name: 'badge',
       component: () => import('@/view/badge')
     }, {
-      path: '/alert',
-      name: 'alert',
-      component: () => import('@/view/alert')
-    }, {
       path: '/radio',
       name: 'radio',
       component: () => import('@/view/radio')
@@ -49,6 +45,10 @@ export default new Router({
       path: '/steps',
       name: 'steps',
       component: () => import('@/view/steps')
+    }, {
+      path: '/alert',
+      name: 'alert',
+      component: () => import('@/view/alert')
     }
   ]
 })
