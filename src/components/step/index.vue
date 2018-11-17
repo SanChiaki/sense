@@ -243,6 +243,7 @@ export default {
     }
     .ss-step-content-desc {
       padding-bottom: 12px;
+      max-width: none;
     }
   }
 }
