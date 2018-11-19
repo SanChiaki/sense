@@ -39,6 +39,7 @@ export default {
       top: '',
       left: '',
       bottom: '',
+      right: '',
       popoverStyle: {}
     }
   },
@@ -107,20 +108,25 @@ export default {
         referenceWidth = reference.offsetWidth;
         popoverHeight = popover.offsetHeight;
       }
-      if (popover && (this.placement === 'right' || this.placement === 'left')) {
+      if (popover && this.placement === 'right') {
         this.top = `-${Number((popoverHeight / 2) - (referenceHeight / 2))}px`;
+        this.left = `${referenceWidth + 10}px`;
       } else if (popover && this.placement === 'top') {
         this.bottom = `${Number(referenceHeight) + 5}px`;
         this.left = `-${Number((popoverWidth / 2) - referenceWidth)}px`;
       } else if (popover && this.placement === 'bottom') {
         this.top = `${Number(referenceHeight) + 5}px`;
         this.left = `-${Number((popoverWidth / 2) - referenceWidth)}px`;
+      } else if (popover && this.placement === 'left') {
+        this.top = `-${Number((popoverHeight / 2) - (referenceHeight / 2))}px`;
+        this.right = `${referenceWidth + 10}px`;
       }
 
       this.popoverStyle = {
         width: `${popoverWidth}px`,
         top: this.top,
         left: this.left,
+        right: this.right,
         bottom: this.bottom
       };
     }
@@ -183,7 +189,6 @@ export default {
       }
     }
     &.ss-popover__right {
-      left: calc(100% + 10px);
       .ss-popover-arrow__right {
         top: calc(50% - 4px);
         left: -4px;
@@ -192,7 +197,6 @@ export default {
       }
     }
     &.ss-popover__left {
-      right: calc(100% + 10px);
       .ss-popover-arrow__left {
         top: calc(50% - 4px);
         right: -4px;
