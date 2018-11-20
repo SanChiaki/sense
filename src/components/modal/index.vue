@@ -187,10 +187,8 @@ export default {
     },
 
     confirm() {
-      if (this.validation.name !== '_default') {
-        if (!this.validation()) { 
-          return 
-        } 
+      if (this.validation.name !== '_default' && !this.validation()) {
+        return 
       }
 
       this.$listeners.confirms && this.$emit('confirms')
