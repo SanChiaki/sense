@@ -11,7 +11,7 @@
       <div class="item">
         <div class="item-title">disabled</div>
         <div class="item-sense">
-          <ss-input v-model="input" :disabled="true"></ss-input>
+          <ss-input v-model="input1" :disabled="true"></ss-input>
         </div>
       </div>
     </div>
@@ -27,7 +27,8 @@ export default {
   },
   data() {
     return {
-      input: ''
+      input: '',
+      input1: ''
     }
   }
 }
