@@ -42,6 +42,10 @@ export default new Router({
       name: 'pagination',
       component: () => import('@/view/pagination')
     }, {
+      path: '/steps',
+      name: 'steps',
+      component: () => import('@/view/steps')
+    }, {
       path: '/alert',
       name: 'alert',
       component: () => import('@/view/alert')
