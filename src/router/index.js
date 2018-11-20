@@ -49,6 +49,10 @@ export default new Router({
       path: '/modal',
       name: 'modal',
       component: () => import('@/view/modal')
+    }, {
+      path: '/dropdown',
+      name: 'dropdown',
+      component: () => import('@/view/dropdown')
     }
   ]
 })

@@ -1,7 +1,7 @@
 <template>
   <ul class="ss-pagination">
     <li class="ss-pagination-item ss-pagination-left">
-      <i class="icon-icon_pagination_left"></i>
+      <i class="icon-icon-pagination-left"></i>
     </li>
     <li class="ss-pagination-item" 
       :class="[current === 1 && 'ss-pagination-item__active']"
@@ -28,23 +28,37 @@
       {{ totalLength }}
     </li>
     <li class="ss-pagination-item ss-pagination-right">
-      <i class="icon-icon_pagination_right"></i>
+      <i class="icon-icon-pagination-right"></i>
+    </li>
+    <li class="ss-pagination-options">
+      <div class="ss-pagination-options-page-change">
+        <ss-select :list="pageSizeList"></ss-select>
+      </div>
+      <div class="ss-pagination-options-jump">
+        跳至<input class="ss-pagination-options-jump-input" type="text">页
+      </div>
     </li>
   </ul>
 </template>
 
 <script>
+import SsSelect from '../select'
+
 export default {
+  components: {
+    SsSelect
+  },
   props: {
     total: Number,
     pageSize: {
       type: Number,
       default: 10
-    }
+    },
+    pageSizeOptions: Array
   },
   data() {
     return {
-      current: -1
+      current: 1
     }
   },
   computed: {
@@ -76,6 +90,13 @@ export default {
     },
     isRightEllipsisShow() {
       return this.totalLength - this.current >= 4 && this.totalLength > 7
+    },
+    pageSizeList() {
+      const list = this.pageSizeOptions || ['10', '20', '30', '40']
+      return list
+      // return list.map((item) => {
+      //   return ``
+      // })
     }
   },
   methods: {
@@ -93,14 +114,14 @@ export default {
     list-style: none;
     .ss-pagination-item {
       display: inline-block;
-      width: 30px;
-      height: 30px;
-      line-height: 28px;
+      width: 32px;
+      height: 32px;
+      line-height: 30px;
       padding: 0 4px;
       background: #fff;
       border: 1px solid #eee;
-      border-radius: 2px;
-      margin: 0 5px;
+      border-radius: 4px;
+      margin-right: 8px;
       font-size: 14px;
       text-align: center;
       cursor: pointer;
@@ -113,9 +134,34 @@ export default {
         border-color: #2A75ED;
       }
     }
+    .ss-pagination-right {
+      margin-right: 0
+    }
     .ss-pagination-ellipsis {
       border: none;
       color: rgba(0, 0, 0, .25);
+    }
+    .ss-pagination-options {
+      display: inline-block;
+      margin-left: 16px;
+      font-size: 14px;
+      .ss-pagination-options-jump {
+        display: inline-block;
+        .ss-pagination-options-jump-input {
+          width: 50px;
+          height: 32px;
+          padding: 4px 11px;
+          margin: 0 8px;
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+          box-sizing: border-box;
+          outline: none;
+          transition: border-color .3s ease-in-out;
+          &:hover, &:focus {
+            border-color: #2A75ED;
+          }
+        }
+      }
     }
   }
 </style>
