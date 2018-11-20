@@ -49,6 +49,10 @@ export default new Router({
       path: '/dropdown',
       name: 'dropdown',
       component: () => import('@/view/dropdown')
+    }, {
+      path: '/popover',
+      name: 'popover',
+      component: () => import('@/view/popover')
     }
   ]
 })
