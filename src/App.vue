@@ -19,7 +19,7 @@ export default {
   body {
     font-size: 14px;
   }
-  [class^="ss-icon"], [class*=" ss-icon"] {
+  [class^="icon-icon"], [class*=" icon-icon"] {
     font-family: 'iconfont';
     font-style: normal;
     font-weight: normal;

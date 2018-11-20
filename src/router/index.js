@@ -45,6 +45,10 @@ export default new Router({
       path: '/alert',
       name: 'alert',
       component: () => import('@/view/alert')
+    }, {
+      path: '/dropdown',
+      name: 'dropdown',
+      component: () => import('@/view/dropdown')
     }
   ]
 })

@@ -4,16 +4,17 @@
       disabled && 'ss-select__disabled'
     ]"
     @click.stop="handleClick"
+    v-clickoutside="handleClose"
   >
     <div class="ss-select-multiple" v-if="multiple" ref="multiple">
       <ss-tag type="info" 
-        v-for="item in selectedObject" 
-        :key="getValue(item)">
-        {{ getLabel(item) }}
+        v-for="item in selectedArr" 
+        :key="item.value">
+        {{ item.label }}
       </ss-tag>
     </div>
     <ss-input :class="[
-        isFocus && 'is-focus'
+        isFocus || visible && 'ss-input__focus'
       ]"
       :placeholder="placeholder || '请选择'" 
       readonly 
@@ -26,49 +27,40 @@
       @focus="handleInputFocus" 
       @blur="handleInputBlur">
       <template slot="suffix">
-        <i class="ss-input-icon icon-icon_down"
+        <i class="ss-input-icon icon-icon-down"
           :class="[
-            isFocus && isDropdownShow && 'is-reverse'
+            visible && 'is-reverse'
           ]">
         </i>
       </template>
     </ss-input>
-    <div class="ss-select-dropdown" 
-      :class="[isFocus && isDropdownShow && 'ss-select-dropdown__show']"
-    >
-      <ul class="ss-select-dropdown-list" v-if="list.length">
-        <li class="ss-select-dropdown-item" 
-          :class="[
-            hoverIndex === index && 'ss-select-dropdown-item__hover',
-            selectIndex === index && 'ss-select-dropdown-item__selected',
-            item.disabled && 'ss-select-dropdown-item__disabled'
-          ]"
-          @mouseenter="hoverItem(index)"
-          v-for="(item, index) in list" 
-          :key="getValue(item)"
-          @click.stop="handleItemClick(item, index)"
-        >
-          {{ getLabel(item) }}
-        </li>
-      </ul>
-      <ul class="ss-select-dropdown-list ss-select-dropdown-list__empty"
-        @click.stop
-        v-else>
-        列表为空
-      </ul>
-    </div>
+    <ss-dropdown-menu :width="menuWidth">
+      <slot></slot>
+    </ss-dropdown-menu>
   </div>
 </template>
 
 <script>
+import Emitter from '@/mixins/emitter'
+import Clickoutside from '@/utils/clickoutside'
+
 import SsInput from '@/components/input'
+import SsDropdownMenu from '@/components/dropdown/dropdownMenu'
 import SsTag from '@/components/tag'
 
-import { getLabel, getValue } from '@/utils/item'
-
 export default {
+  name: 'SsSelect',
+  componentName: 'SsSelect',
+  mixins: [Emitter],
+  provide() {
+    return {
+      select: this
+    }
+  },
+  directives: { Clickoutside },
   components: {
     SsInput,
+    SsDropdownMenu,
     SsTag
   },
   props: {
@@ -83,69 +75,57 @@ export default {
   },
   data() {
     return {
+      options: [],
       isFocus: false,
-      isDropdownShow: false,
-      isDropdownClick: false,
+      visible: false,
       selectLabel: '',
-      selectIndex: -1,
-      hoverIndex: -1,
-      selectedObject: {},
-      multipleHeight: null
+      selectedArr: [],
+      multipleHeight: null,
+      menuWidth: 0
     }
   },
-  created() {
-    this.getLabel = getLabel
-    this.getValue = getValue
+  mounted() {
+    this.setMenuWidth()
+    
+    this.$on('selectOption', this.handleSelectOption)
+  },
+  watch: {
+    visible(val) {
+      this.broadcast('SsDropdownMenu', 'visible', val)
+    }
   },
   methods: {
     handleInputFocus() {
       this.isFocus = true
     },
     handleInputBlur() {
-      this.timer = setTimeout(() => {
-        if (this.isDropdownClick) {
-          this.isDropdownClick = false
-        } else {
-          this.isFocus = false
-          this.isDropdownShow = false
-        }
-      }, 100)
+      this.isFocus = false
     },
     handleClick() {
       if (!this.disabled) {
-        this.isDropdownShow = !this.isDropdownShow
-        this.hoverIndex = this.selectIndex
+        this.visible = !this.visible
       }
     },
-    hoverItem(index) {
-      this.hoverIndex = index
-    },
-    handleItemClick(item, index) {
-      if (!item.disabled) {
-        this.$refs.input.focus()
-        if (!this.multiple) {
-          this.isDropdownClick = true
-          this.selectLabel = item.label || item
-          this.selectIndex = index
-          this.hoverIndex = index
-          this.isDropdownShow = false
-          this.$emit('input', item.value || item)
-          return
-        } 
-
-        clearTimeout(this.timer)
-        if (this.selectedObject[index]) {
-          delete this.selectedObject[index]
+    handleSelectOption(option) {
+      if (!this.multiple) {
+        this.visible = false
+        this.selectLabel = option.label
+        this.$emit('change', option.value)
+        this.$emit('input', option.value)
+      } else {
+        const index = this.selectedArr.indexOf(option.value)
+        if (index > -1) {
+          this.selectedArr.splice(1, index)
         } else {
-          this.selectedObject[index] = item
+          this.selectedArr.push(option.value)
         }
-        this.changeMultipleHeight()
       }
     },
-    changeMultipleHeight() {
-      this.$nextTick(() => {
-        this.multipleHeight = this.$refs.multiple.clientHeight
-      })
+    setMenuWidth() {
+      this.menuWidth = this.$el.clientWidth
+    },
+    handleClose() {
+      this.visible = false
     }
   }
 }
@@ -180,52 +160,6 @@ export default {
     .ss-input-inner {
       cursor: pointer;
     }
-    .ss-select-dropdown {
-      position: absolute;
-      left: 0;
-      top: 36px;
-      width: 100%;
-      max-height: 210px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      background: rgba(255,255,255,1);
-      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.09), 0px 6px 12px 0px rgba(0,0,0,0.06);
-      border-radius: 2px;
-      transition: transform .15s ease-in-out;
-      transform-origin: 50% 0%;
-      transform: scaleY(0);
-      z-index: 1;
-      &.ss-select-dropdown__show {
-        transform: scaleY(1);
-      }
-      .ss-select-dropdown-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        &.ss-select-dropdown-list__empty {
-          height: 100px;
-          line-height: 100px;
-          text-align: center;
-        }
-      }
-      .ss-select-dropdown-item {
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        cursor: pointer;
-        &.ss-select-dropdown-item__hover {
-          background-color: #F5F7FA;
-        }
-        &.ss-select-dropdown-item__disabled {
-          background-color: transparent;
-          color: #B2B2B2;
-          cursor: not-allowed;
-        }
-        &.ss-select-dropdown-item__selected {
-          color: $mc;
-        }
-      }
-    }
+    
   }
 </style>
