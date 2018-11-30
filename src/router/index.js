@@ -49,6 +49,10 @@ export default new Router({
       path: '/alert',
       name: 'alert',
       component: () => import('@/view/alert')
+    }, {
+      path: '/message',
+      name: 'message',
+      component: () => import('@/view/message')
     }
   ]
 })
