@@ -3,7 +3,7 @@ import MessageVue from './message.vue';
 
 const MessageConstructor = Vue.extend(MessageVue);
 
-// const messageType = ['info', 'success', 'warning', 'error', 'loading'];
+const messageType = ['info', 'success', 'warning', 'error'];
 const instances = [];
 
 let seed = 1;
@@ -54,5 +54,49 @@ const Message = function (options) {
     instance.vm.close(id);
   }
 }
+
+
+Message.close = (id, customCloseFunc) => {
+  const len = instances.length;
+  let index;
+  let removedHeight;
+
+  for (let i = 0; i < len; i++) {
+    if (id === instances[i].id) {
+      if (typeof customCloseFunc === 'function') {
+        customCloseFunc(instances[i]);
+      }
+      index = i;
+      removedHeight = instances[i].dom.offsetHeight;
+      instances.splice(i, 1);
+      break;
+    }
+  }
+
+  if (len > 1) {
+    for (let i = index; i < len - 1; i++) {
+      instances[i].dom.style.top = `${parseInt(instances[i].dom.style.top, 10) - removedHeight - 8}px`;
+    }
+  }
+}
+
+Message.closeAll = () => {
+  instances.forEach((elem) => {
+    elem.close();
+  })
+}
+
+messageType.forEach((type) => {
+  Message[type] = (options) => {
+    if (typeof options === 'string') {
+      options = {
+        message: options
+      }
+    }
+    options.type = type;
+    options.icon = options.icon;
+    return Message(options);
+  }
+})
 
 export default Message;

@@ -5,10 +5,10 @@
       <div class="item">
         <div class="item-title">默认：3s后自动消失，用户主动点击后消失</div>
         <div class="item-sense">
-          <button class="primary">提示</button>
-          <button class="warning">警告</button>
-          <button class="error">错误</button>
-          <button class="success">成功</button>
+          <button class="primary" @click="handleInfo">提示</button>
+          <button class="warning" @click="handleWarning">警告</button>
+          <button class="error" @click="handleError">错误</button>
+          <button class="success" @click="handleSuccess">成功</button>
         </div>
       </div>
       <div class="item">
@@ -35,6 +35,18 @@ export default {
   },
 
   methods: {
+    handleInfo(msg) {
+      this.$message.info('提示：', msg);
+    },
+    handleSuccess(msg) {
+      this.$message.success('成功：', msg);
+    },
+    handleWarning(msg) {
+      this.$message.warning('警告：', msg);
+    },
+    handleError(msg) {
+      this.$message.error('错误：', msg);
+    },
   }
 }
 </script>
