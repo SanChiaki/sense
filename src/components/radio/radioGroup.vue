@@ -1,15 +1,13 @@
 <template>
   <div class="ss-radio-group">
-    <ss-radio v-for="item in list" :key="getLabel(item)">
-      {{ getLabel(item) }}
+    <ss-radio v-for="item in list" :key="item.value">
+      {{ item.label }}
     </ss-radio>
   </div>
 </template>
 
 <script>
-import SsRadio from '../radio'
-
-import { getLabel, getValue } from '@/utils/item'
+import SsRadio from './radio'
 
 export default {
   components: {
@@ -18,10 +16,6 @@ export default {
   props: {
     value: [String, Number],
     list: Array
-  },
-  created() {
-    this.getLabel = getLabel
-    this.getValue = getValue
   }
 }
 </script>

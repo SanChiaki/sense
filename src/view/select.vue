@@ -5,35 +5,43 @@
       <div class="item">
         <div class="item-title">select基本用法</div>
         <div class="item-sense">
-          <ss-select v-model="select" placeholder="placeholder不是必须" :list="list">
+          <ss-select v-model="select" placeholder="placeholder不是必须">
+            <ss-option value="1" label="测试1"></ss-option>
+            <ss-option value="2" label="测试2"></ss-option>
+            <ss-option value="3" label="测试3"></ss-option>
           </ss-select>
         </div>
       </div>
       <div class="item">
         <div class="item-title">带有禁用项的</div>
         <div class="item-sense">
-          <ss-select v-model="select1" :list="list1">
+          <ss-select v-model="select1">
+            <ss-option value="1" label="测试1" disabled></ss-option>
+            <ss-option value="2" label="测试2"></ss-option>
+            <ss-option value="3" label="测试3"></ss-option>
           </ss-select>
         </div>
       </div>
       <div class="item">
         <div class="item-title">select禁止</div>
         <div class="item-sense">
-          <ss-select v-model="select2" disabled placeholder="小鹅通最好了，你不用选了" :list="list2">
+          <ss-select v-model="select2" disabled placeholder="小鹅通最好了，你不用选了">
           </ss-select>
         </div>
       </div>
       <div class="item">
         <div class="item-title">list为空</div>
         <div class="item-sense">
-          <ss-select v-model="select3" placeholder="请选择" :list="list3">
+          <ss-select v-model="select3">
           </ss-select>
         </div>
       </div>
       <div class="item">
         <div class="item-title">多选</div>
         <div class="item-sense">
-          <ss-select v-model="select4" placeholder="请选择" :list="list4" multiple>
+          <ss-select v-model="select4" multiple>
+            <ss-option value="1" label="选项1"></ss-option>
+            <ss-option value="2" label="选项2"></ss-option>
           </ss-select>
         </div>
       </div>
@@ -42,11 +50,13 @@
 </template>
 
 <script>
-import SsSelect from '@/components/select/index'
+import SsSelect from '@/components/select'
+import SsOption from '@/components/option'
 
 export default {
   components: {
-    SsSelect
+    SsSelect,
+    SsOption
   },
   data() {
     return {

@@ -22,7 +22,7 @@
       <template v-if="$slots.suffix">
         <slot name="suffix"></slot>
       </template>
-      <i v-else class="ss-input-icon iconfont" :class="[suffixIcon]"></i>
+      <i v-else class="ss-input-icon" :class="[suffixIcon]"></i>
     </span>
   </div>
 </template>
@@ -42,12 +42,8 @@ export default {
   },
   data() {
     return {
-      isReverse: false
-    }
-  },
-  computed: {
-    currentVal() {
-      return this.value === undefined || this.value === null ? '' : this.value
+      isReverse: false,
+      currentVal: this.value === undefined || this.value === null ? '' : this.value
     }
   },
   created() {
@@ -83,7 +79,7 @@ export default {
         border-color: #c0c4cc;
       }
     }
-    &.is-focus {
+    &.ss-input__focus {
       .ss-input-inner {
         border-color: $mc;
       }
@@ -109,8 +105,8 @@ export default {
     }
     .ss-input-inner {
       width: inherit;
-      height: 36px;
-      line-height: 36px;
+      height: 32px;
+      line-height: 30px;
       padding: 0 8px;
       border: 1px solid #eee;
       border-radius: 4px;

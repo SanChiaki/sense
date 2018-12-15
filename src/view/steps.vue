@@ -5,7 +5,7 @@
       <div class="item">
         <div class="item-title">水平</div>
         <div class="item-sense">
-          <ss-steps :current="current.horizontal"  :status="status.horizontal">
+          <ss-steps :current="current.horizontal" :status="status.horizontal">
             <ss-step 
               title="Horizontal" 
               desc="水平描述水平描述水平描述水平描述水平描述水平描述水平描述水平描述水平描述"

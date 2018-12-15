@@ -1,7 +1,10 @@
 <template>
   <div 
     class="ss-step"
-    :class="[ stepClass, { 'ss-step-next-error': nextError } ]"
+    :class="[ 
+      `ss-step__${this.currentStatus}`, 
+      nextError && 'ss-step-next-error'
+    ]"
   >
     <div class="ss-step-tail"></div>
     <div class="ss-step-icon">
@@ -59,10 +62,6 @@ export default {
       } else { 
         return 'wait';
       }
-    },
-
-    stepClass() {
-      return `ss-step__${this.currentStatus}`;
     }
   },
 

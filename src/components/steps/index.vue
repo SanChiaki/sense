@@ -1,7 +1,7 @@
 <template>
   <div 
     class='ss-steps'
-    :class="[ stepsDirection ]"
+    :class="[ `ss-steps__${this.direction}` ]"
   >
     <slot></slot>
   </div>
@@ -35,12 +35,6 @@ export default {
   data() {
     return {
       steps: []
-    }
-  },
-
-  computed: {
-    stepsDirection() {
-      return `ss-steps__${this.direction}`
     }
   },
 

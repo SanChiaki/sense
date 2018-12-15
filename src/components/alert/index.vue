@@ -2,14 +2,16 @@
   <transition name='ss-alert-fade'>
     <div 
       class='ss-alert'
-      :class='[ typeClass,  closable ? closableClass : null ]'
+      :class='[ 
+        `ss-alert__${this.type}`, 
+        closable && "ss-alert__closable" 
+      ]'
       v-show='visible'
-      :style='{ width: width }'
     >
       <i 
         v-if='showIcon' 
         class='ss-alert-status-icon' 
-        :class='[ statusClass ]'
+        :class='[ `icon-icon-status__${this.type}` ]'
         :style='{ fontSize: iconSize }'
       >
       </i>
@@ -51,10 +53,6 @@ export default {
     iconSize: {
       type: String,
       default: null
-    },
-    width: {
-      type: String,
-      default: null
     }
   },
 
@@ -68,18 +66,6 @@ export default {
     close() {
       this.visible = false;
       this.$emit('close');
-    }
-  },
-
-  computed: {
-    typeClass() {
-      return `ss-alert__${this.type}`;
-    },
-    statusClass() {
-      return `icon-icon-status__${this.type}`;
-    },
-    closableClass() {
-      return 'ss-alert__closable';
     }
   }
 };
@@ -99,9 +85,8 @@ export default {
   color: #353535;
   border: 1px solid;
   border-radius: 2px;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease-in-out;
   font-size: 0;
-  width: 560px;
 
   &.ss-alert__primary {
     border-color: #89b4fa;
