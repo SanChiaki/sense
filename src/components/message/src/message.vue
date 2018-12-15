@@ -9,7 +9,7 @@
         :class="{ [`ss-message__${type}`]: type }"
         v-show="visible"
       >
-        <i class="icon ss-message-icon" :class="iconClass"></i>
+        <i class="ss-message-icon" :class="iconClass"></i>
         <span class="ss-message-content">{{ message }}</span>
       </div>
     </transition>
@@ -76,22 +76,64 @@ export default {
 
 <style lang="scss" scoped>
 .move-up-enter-active {
-  animation: move-up .3s;
+  animation: move-up .3s ease-in-out both;
 }
-.move-up-leave-active {
-  animation: move-up .3s reverse;
+.move-up-leave-to {
+  animation: move-up .3s ease-in-out both reverse;
 }
 @keyframes move-up {
   0% {
     opacity: 0;
+    transform-origin: 0 0;
     transform: translateY(-100%);
   }
   100% {
     opacity: 1;
+    transform-origin: 0 0;
     transform: translateY(0);
   }
 }
 .ss-message {
-  transition: opacity .3s,transform .3s,top .4s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  height: 40px;
+  margin: 10px 0;
+  padding: 0 24px;
+  background: #ffffff;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.05),0px 6px 12px 0px rgba(0,0,0,0.05);
+  border-radius: 2px;
+  text-align: center;
+  font-size: 0;
+
+  &__wrapper {
+    position: fixed;
+    top: 16px;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+    transition: opacity .3s,transform .3s,top .4s;
+  }
+  .ss-message-icon {
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  .ss-message-content {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+.icon-icon-status__primary {
+  color: rgb(42, 117, 237);
+}
+.icon-icon-status__success {
+  color: rgb(47, 206, 111);  
+}
+.icon-icon-status__warning {
+  color: rgb(255, 184, 94);
+}
+.icon-icon-status__error {
+  color: rgb(251, 97, 97);  
 }
 </style>

@@ -5,16 +5,16 @@
       <div class="item">
         <div class="item-title">默认：3s后自动消失，用户主动点击后消失</div>
         <div class="item-sense">
-          <button class="primary" @click="handleInfo">提示</button>
-          <button class="warning" @click="handleWarning">警告</button>
-          <button class="error" @click="handleError">错误</button>
-          <button class="success" @click="handleSuccess">成功</button>
+          <button class="primary" @click="handleInfo('文案文案文案文案文案文案文案文案文案文案')">提示</button>
+          <button class="warning" @click="handleWarning('文案文案文案文案文案文案文案文案文案文案')">警告</button>
+          <button class="error" @click="handleError('文案文案文案文案文案文案文案文案文案文案')">错误</button>
+          <button class="success" @click="handleSuccess('文案文案文案文案文案文案文案文案文案文案')">成功</button>
         </div>
       </div>
       <div class="item">
         <div class="item-title">时间：10s自动消失</div>
         <div class="item-sense">
-          <!-- <message></message> -->
+          <button class="primary" @click="handleDelay('文案文案文案文案文案文案文案文案文案文案')">延时</button>
         </div>
       </div>
     </div>
@@ -36,17 +36,23 @@ export default {
 
   methods: {
     handleInfo(msg) {
-      this.$message.info('提示：', msg);
+      this.$message.info(`提示：${msg}`);
     },
     handleSuccess(msg) {
-      this.$message.success('成功：', msg);
+      this.$message.success(`成功：${msg}`);
     },
     handleWarning(msg) {
-      this.$message.warning('警告：', msg);
+      this.$message.warning(`警告：${msg}`);
     },
     handleError(msg) {
-      this.$message.error('错误：', msg);
+      this.$message.error(`错误：${msg}`);
     },
+    handleDelay(msg) {
+      this.$message.info({
+        message: `提示：${msg}`,
+        duration: 10000
+      });
+    }
   }
 }
 </script>
