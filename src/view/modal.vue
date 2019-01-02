@@ -9,14 +9,13 @@
             iconType="success"
             title="提示"
             content="这里是内容"
-            :isShow.sync="isShow"
+            :visible.sync="isShow"
           >
           </ss-modal>
         </section>
         
-
         <hr>
-
+        
         <section class="center">
           <h4>添加确认按钮回调--打开控制台查看</h4>
           <ss-button type="primary" @click="isShow1 = true">按钮回调</ss-button>
@@ -24,7 +23,7 @@
             iconType="primary"
             title="提示"
             content="确认回调"
-            :isShow.sync="isShow1"
+            :visible.sync="isShow1"
             @confirms="cb"
             :btnText = "{confirm: '确定'}"
           >
@@ -40,7 +39,7 @@
             iconType="error"
             title="提示"
             content="取消与确认回调"
-            :isShow.sync="isShow2"
+            :visible.sync="isShow2"
             :models="false"
             @confirms="cb"
             @cancel="cancelCb"
@@ -57,7 +56,7 @@
             iconType="error"
             title="提示"
             content="插槽"
-            :isShow.sync="isShow3"
+            :visible.sync="isShow3"
           >
             <input type="text">
           </ss-modal>
@@ -72,7 +71,7 @@
             iconType="warning"
             title="提示--打开控制台"
             content="校验参数类型为function，根据实际业务需求，返回值必须设为true/false。"
-            :isShow.sync="isShow4"
+            :visible.sync="isShow4"
             :validation="test"
             @confirms="cb"
             @cancel="() => {}"
@@ -155,7 +154,7 @@ export default {
     padding-bottom: 8px;
   }
   .content {
-    padding-left: 20px;
+    padding: 0 20px;
   }
   input {
     border: 1px solid #999;

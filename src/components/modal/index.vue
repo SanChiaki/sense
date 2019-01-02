@@ -1,5 +1,5 @@
 <template >
-  <div class="ss-modal" v-show="isShow">
+  <div class="ss-modal">
     <div class="ss-modal__wrapper" ref="modal">
       <div class="ss-modal-main">
         <div class="ss-modal-main-header">
@@ -20,16 +20,16 @@
           <div class="ss-modal-slot__extra" v-if="$slots.default">
               <slot></slot>
           </div> 
-          <p class="ss-modal-btn" v-if="$listeners.cancel || $listeners.confirms">
+          <p class="ss-modal-btn">
             <ss-button
-              v-if="$listeners.cancel"
+              v-if="btnText.cancel"
               class="ss-modal__cancel"
               :type="iconType" 
               @click="cancel">
               {{ btnText.cancel }}
             </ss-button>
             <ss-button
-              v-if="$listeners.confirms"
+              v-if="btnText.confirm"
               :type="iconType" 
               @click="confirm">
               {{ btnText.confirm }}
@@ -75,14 +75,14 @@ export default {
   },
 
   props: {
-    isShow: {
+    visible: {
       type: Boolean,
       default: false
     },
 
     width: {
       type: String,
-      default: '40%'
+      default: '540px'
     },
 
     iconType: {
@@ -122,12 +122,12 @@ export default {
     return {
       maskControl: {
         isShow: false
-      },
+      }
     }
   },
 
   watch: {
-    isShow(val) {
+    visible(val) {
       if (val) {
         isOpen = true
         this.maskControl.isShow = true
@@ -143,7 +143,6 @@ export default {
         width: ${this.width};
         left: ${mousePosition.x}px;
         top: ${mousePosition.y}px;
-        transform: translate(0, 0) scale(0);
       `
       this.$nextTick(this.lastMainPosition)
     },
@@ -187,22 +186,24 @@ export default {
     },
 
     confirm() {
-      if (this.validation.name !== '_default' && !this.validation()) {
-        return 
+      if (this.validation.name !== '_default') {
+        if (!this.validation()) { 
+          return 
+        } 
       }
 
-      this.$listeners.confirms && this.$emit('confirms')
+      this.$emit('confirms')
       this.close()
     },
 
     cancel() {
-      this.$listeners.cancel && this.$emit('cancel')
+      this.$emit('cancel')
       this.close()
     },
 
     maskAfterLeave() {
       isOpen = false
-      this.$emit('update:isShow', false)
+      this.$emit('update:visible', false)
       window.removeEventListener('resize', this.lastMainPosition, false)
     }
   }
@@ -221,6 +222,7 @@ export default {
       transition: all .3s ease-in-out;
       transform-origin: 0 0 0;
       opacity: 0;
+      transform: translate(0, 0) scale(0);
       & > .ss-modal-main {
         .ss-modal-main-header {
           text-align: right;
@@ -252,6 +254,7 @@ export default {
           }
           .ss-modal-title {
             font-size: 16px;
+            font-weight: 600;
             color: #353535;
             padding-bottom: 8px;
           }
