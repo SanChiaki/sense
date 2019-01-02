@@ -25,9 +25,6 @@ export default {
     label: String,
     disabled: Boolean
   },
-  data() {
-    return {}
-  },
   computed: {
     isMultiple() {
       return this.select.multiple
@@ -36,11 +33,14 @@ export default {
       if (!this.isMultiple) {
         return this.select.value === this.value
       }
-      return this.select.selectedArr.includes(this.value)
+      return this.select.selectedValues.includes(this.value)
     }
   },
-  created() {},
-  mounted() {},
+  created() {
+    if (this.isSelected) {
+      this.dispatch('SsSelect', 'defaultValue', this.label)
+    }
+  },
   methods: {
     handleClick() {
       if (!this.disabled) {

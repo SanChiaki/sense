@@ -20,13 +20,31 @@ export default {
   data() {
     return {
       isShow: false,
-      style: {}
+      style: {
+        width: 0,
+        left: 0,
+        top: 0
+      },
+      selfHeight: 0,
+      bodyHeight: 0
     }
   },
   mounted() {
-    this.setMenuStyle()
+    this.bodyHeight = document.documentElement.clientHeight
+    this.$nextTick(() => {
+      this.initMenuPlacement()
+      this.setSelfHeight()
+      this.updateMenuPlacement()
+    })
 
     this.$on('visible', this.visible)
+    this.$on('update', this.updateMenuPlacement)
+    window.addEventListener('resize', () => {
+      this.bodyHeight = document.documentElement.clientHeight
+    })
+    window.addEventListener('scroll', () => {
+      this.updateMenuPlacement()
+    })
   },
   watch: {
     width(val) {
@@ -34,19 +52,32 @@ export default {
     }
   },
   methods: {
-    setMenuStyle() {
+    setSelfHeight() {
+      this.selfHeight = this.$el.clientHeight
+    },
+    initMenuPlacement() {
+      const placement = this.$parent.placement
+      const parent = this.$parent.$el.getBoundingClientRect()
+      if (placement === 'bottomRight') {
+        this.style.right = '1px'
+      } else if (placement === 'bottomCenter') {
+        const selfWidth = this.$el.clientWidth
+        this.style.left = `${(parent.width - selfWidth) / 2}px`
+      } else {
+        this.style.left = '1px'
+      }
+      this.style.top = `${parent.height}px`
+    },
+    updateMenuPlacement() {
       this.$nextTick(() => {
-        const placement = this.$parent.placement
         const parent = this.$parent.$el.getBoundingClientRect()
-        if (placement === 'bottomRight') {
-          this.style.right = '1px'
-        } else if (placement === 'bottomCenter') {
-          const selfWidth = this.$el.clientWidth
-          this.style.left = `${(parent.width - selfWidth) / 2}px`
+        if (parent.bottom + this.selfHeight > this.bodyHeight - 10) {
+          this.style.top = `-${this.selfHeight}px`
+          this.style.transformOrigin = '50% 100%'
         } else {
-          this.style.left = '1px'
+          this.style.top = `${parent.height}px`
+          this.style.transformOrigin = '50% 0%'
         }
-        this.style.top = `${parent.height}px`
       })
     },
     visible(isShow) {
@@ -71,9 +102,9 @@ export default {
     box-shadow: 0 2px 8px rgba(0,0,0,.15);
     border-radius: 2px;
     transition: transform .15s ease-in-out;
-    transform-origin: 50% 0%;
     transform: scaleY(0);
-    z-index: 1;
+    transform-origin: 50% 0%;
+    z-index: 10;
     &.ss-dropdown-menu__show {
       transform: scaleY(1);
     }
