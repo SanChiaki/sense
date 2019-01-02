@@ -89,10 +89,12 @@ export default {
       menuWidth: 0
     }
   },
+  created() {
+    this.$on('defaultValue', this.setDefaultValue)
+    this.$on('selectOption', this.handleSelectOption)
+  },
   mounted() {
     this.setMenuWidth()
-    
-    this.$on('selectOption', this.handleSelectOption)
   },
   watch: {
     visible(val) {
@@ -124,6 +126,9 @@ export default {
       if (!this.disabled) {
         this.visible = !this.visible
       }
+    },
+    setDefaultValue(label) {
+      this.selectLabel = label
     },
     handleSelectOption(option) {
       if (!this.multiple) {

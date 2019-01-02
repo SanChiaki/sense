@@ -1,6 +1,8 @@
 <template>
   <ul class="ss-pagination">
-    <li class="ss-pagination-item ss-pagination-left">
+    <li class="ss-pagination-item ss-pagination-left" 
+      :class="[current === 1 && 'ss-pagination-item__disabled']"
+      @click="left">
       <i class="icon-icon-pagination-left"></i>
     </li>
     <li class="ss-pagination-item" 
@@ -27,12 +29,14 @@
     >
       {{ totalLength }}
     </li>
-    <li class="ss-pagination-item ss-pagination-right">
+    <li class="ss-pagination-item ss-pagination-right"
+      :class="[current === totalLength && 'ss-pagination-item__disabled']"
+      @click="right">
       <i class="icon-icon-pagination-right"></i>
     </li>
     <li class="ss-pagination-options">
-      <div class="ss-pagination-options-size">
-        <ss-select v-model="currentPageSize" @change="selectChange">
+      <div class="ss-pagination-options-size" v-if="showSizeChanger">
+        <ss-select v-model="currentPageSize" @change="pageSizeChange">
           <ss-option v-for="item in pageSizeList" 
             :key="item" 
             :value="item"
@@ -40,8 +44,11 @@
           </ss-option>
         </ss-select>
       </div>
-      <div class="ss-pagination-options-jump">
-        跳至<input class="ss-pagination-options-jump-input" type="text">页
+      <div class="ss-pagination-options-jump" v-if="showQuickJumper">
+        跳至<input class="ss-pagination-options-jump-input" 
+          type="text" 
+          v-model="jumpPage"
+          @keyup.enter="jump">页
       </div>
     </li>
   </ul>
@@ -62,17 +69,20 @@ export default {
       type: Number,
       default: 10
     },
-    pageSizeOptions: Array
+    pageSizeOptions: Array,
+    showSizeChanger: Boolean,
+    showQuickJumper: Boolean
   },
   data() {
     return {
       current: 1,
-      currentPageSize: this.pageSize
+      currentPageSize: this.pageSize,
+      jumpPage: ''
     }
   },
   computed: {
     totalLength() {
-      return Math.ceil(this.total / this.pageSize)
+      return Math.ceil(this.total / this.currentPageSize)
     },
     list() {
       const arr = []
@@ -101,19 +111,40 @@ export default {
       return this.totalLength - this.current >= 4 && this.totalLength > 7
     },
     pageSizeList() {
-      const list = this.pageSizeOptions || [10, 20, 30, 40]
-      return list
+      return this.pageSizeOptions || [10, 20, 30, 40]
     }
   },
   methods: {
-    handleItemClick(index) {
-      if (this.current !== index) {
-        this.current = index
-        this.emit('change', index)
+    handleItemClick(page) {
+      if (this.current !== page) {
+        this.current = page
+        this.$emit('change', page)
       }
     },
-    selectChange(val) {
-      console.log(val)
+    pageSizeChange(size) {
+      this.currentPageSize = size
+      this.$emit('sizeChange', size)
+    },
+    left() {
+      if (this.current > 1) {
+        this.current--
+      }
+    },
+    right() {
+      if (this.current < this.totalLength) {
+        this.current++
+      }
+    },
+    jump() {
+      let page = +this.jumpPage
+      if (page) {
+        if (page > this.totalLength) {
+          page = this.totalLength
+        }
+        this.current = page
+        this.$emit('change', page)
+      }
+      this.jumpPage = ''
     }
   }
 }
@@ -124,6 +155,7 @@ export default {
     font-size: 0;
     color: #353535;
     list-style: none;
+    user-select: none;
     .ss-pagination-item {
       display: inline-block;
       width: 32px;
@@ -145,6 +177,11 @@ export default {
         color: #2A75ED;
         border-color: #2A75ED;
       }
+      &.ss-pagination-item__disabled {
+        color: #d9d9d9;
+        cursor: not-allowed;
+        border-color: #eee;
+      }
     }
     .ss-pagination-right {
       margin-right: 0
@@ -152,6 +189,10 @@ export default {
     .ss-pagination-ellipsis {
       border: none;
       color: rgba(0, 0, 0, .25);
+      &:hover {
+        color: rgba(0, 0, 0, .25);
+        cursor: default;
+      }
     }
     .ss-pagination-options {
       display: inline-block;
@@ -170,6 +211,7 @@ export default {
           height: 32px;
           padding: 4px 11px;
           margin: 0 8px;
+          font-size: 14px;
           border: 1px solid #d9d9d9;
           border-radius: 4px;
           box-sizing: border-box;
