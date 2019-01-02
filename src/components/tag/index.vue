@@ -8,7 +8,7 @@
   >
     <slot></slot>
     <span class="ss-tag-icon-wrap" v-if="closable">
-      <i class="ss-tag-icon icon-icon_close" @click="handleClick"></i>
+      <i class="ss-tag-icon icon-icon-close" @click.stop="close"></i>
     </span>
   </div>
 </template>
@@ -25,22 +25,10 @@ export default {
       isShow: true
     }
   },
-  mounted() {
-    if (this.closable) {
-      this.closeAnimEnd()
-    }
-  },
   methods: {
-    handleClick() {
+    close() {
       this.isShow = false
       this.$emit('close')
-    },
-    closeAnimEnd() {
-      this.$nextTick(() => {
-        this.$el.addEventListener('transitionend', () => {
-          this.$emit('afterClose')
-        })
-      })
     }
   }
 }
@@ -92,8 +80,8 @@ export default {
     }
     .ss-tag-icon-wrap {
       position: absolute;
-      right: 5px;
-      top: 5px;
+      right: 4px;
+      top: 3px;
       width: 14px;
       height: 14px;
       line-height: 12px;

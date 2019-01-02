@@ -8,6 +8,24 @@
           <ss-pagination :total="500"></ss-pagination>
         </div>
       </div>
+      <div class="item">
+        <div class="item-title">pageSize为20</div>
+        <div class="item-sense">
+          <ss-pagination :total="500" :pageSize="20"></ss-pagination>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-title">可以更改pageSize</div>
+        <div class="item-sense">
+          <ss-pagination :total="500" showSizeChanger></ss-pagination>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-title">可以跳到某页</div>
+        <div class="item-sense">
+          <ss-pagination :total="500" showQuickJumper></ss-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +62,9 @@ export default {
       font-size: 16px;
       font-weight: 600;
       line-height: 30px;
+    }
+    .item-sense {
+      margin: 5px 0 0;
     }
   }
 </style>

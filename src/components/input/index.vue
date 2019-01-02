@@ -46,7 +46,10 @@ export default {
       currentVal: this.value === undefined || this.value === null ? '' : this.value
     }
   },
-  created() {
+  watch: {
+    value(val) {
+      this.currentVal = val
+    }
   },
   methods: {
     focus() {
@@ -74,6 +77,8 @@ export default {
   .ss-input {
     position: relative;
     width: 100%;
+    height: 32px;
+    line-height: 30px;
     &:hover {
       .ss-input-inner {
         border-color: #c0c4cc;
@@ -105,11 +110,11 @@ export default {
     }
     .ss-input-inner {
       width: inherit;
-      height: 32px;
-      line-height: 30px;
+      height: inherit;
       padding: 0 8px;
       border: 1px solid #eee;
       border-radius: 4px;
+      font-size: 14px;
       outline: none;
       transition: border-color .2s ease-in-out;
       box-sizing: border-box;
