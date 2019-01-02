@@ -37,11 +37,14 @@
         </div>
       </div>
       <div class="item">
-        <div class="item-title">多选</div>
+        <div class="item-title">多选换行{{ select4.toString() }}</div>
         <div class="item-sense">
           <ss-select v-model="select4" multiple>
-            <ss-option value="1" label="选项1"></ss-option>
-            <ss-option value="2" label="选项2"></ss-option>
+            <ss-option value="1" label="小鹅通"></ss-option>
+            <ss-option value="2" label="无与伦比"></ss-option>
+            <ss-option value="3" label="超时代"></ss-option>
+            <ss-option value="4" label="摩天轮"></ss-option>
+            <ss-option value="5" label="地表最强"></ss-option>
           </ss-select>
         </div>
       </div>

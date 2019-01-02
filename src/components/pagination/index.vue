@@ -31,8 +31,14 @@
       <i class="icon-icon-pagination-right"></i>
     </li>
     <li class="ss-pagination-options">
-      <div class="ss-pagination-options-page-change">
-        <ss-select :list="pageSizeList"></ss-select>
+      <div class="ss-pagination-options-size">
+        <ss-select v-model="currentPageSize" @change="selectChange">
+          <ss-option v-for="item in pageSizeList" 
+            :key="item" 
+            :value="item"
+            :label="`${item} 条/页`">
+          </ss-option>
+        </ss-select>
       </div>
       <div class="ss-pagination-options-jump">
         跳至<input class="ss-pagination-options-jump-input" type="text">页
@@ -43,10 +49,12 @@
 
 <script>
 import SsSelect from '../select'
+import SsOption from '../option'
 
 export default {
   components: {
-    SsSelect
+    SsSelect,
+    SsOption
   },
   props: {
     total: Number,
@@ -58,7 +66,8 @@ export default {
   },
   data() {
     return {
-      current: 1
+      current: 1,
+      currentPageSize: this.pageSize
     }
   },
   computed: {
@@ -92,16 +101,19 @@ export default {
       return this.totalLength - this.current >= 4 && this.totalLength > 7
     },
     pageSizeList() {
-      const list = this.pageSizeOptions || ['10', '20', '30', '40']
+      const list = this.pageSizeOptions || [10, 20, 30, 40]
       return list
-      // return list.map((item) => {
-      //   return ``
-      // })
     }
   },
   methods: {
     handleItemClick(index) {
-      this.current = index
+      if (this.current !== index) {
+        this.current = index
+        this.emit('change', index)
+      }
+    },
+    selectChange(val) {
+      console.log(val)
     }
   }
 }
@@ -144,9 +156,15 @@ export default {
     .ss-pagination-options {
       display: inline-block;
       margin-left: 16px;
-      font-size: 14px;
+      font-size: 0;
+      .ss-pagination-options-size {
+        display: inline-block;
+        width: 100px;
+        margin-right: 11px;
+      }
       .ss-pagination-options-jump {
         display: inline-block;
+        font-size: 14px;
         .ss-pagination-options-jump-input {
           width: 50px;
           height: 32px;

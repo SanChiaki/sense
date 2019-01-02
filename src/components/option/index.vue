@@ -36,7 +36,7 @@ export default {
       if (!this.isMultiple) {
         return this.select.value === this.value
       }
-      return this.select.selectedArr.includes(this.value)
+      return this.select.selectedValues.includes(this.value)
     }
   },
   created() {},

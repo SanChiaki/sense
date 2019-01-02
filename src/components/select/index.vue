@@ -4,12 +4,16 @@
       disabled && 'ss-select__disabled'
     ]"
     @click.stop="handleClick"
-    v-clickoutside="handleClose"
+    v-clickoutside="close"
   >
-    <div class="ss-select-multiple" v-if="multiple" ref="multiple">
+    <div class="ss-select-multiple" 
+      v-if="multiple" 
+      ref="multiple">
       <ss-tag type="info" 
-        v-for="item in selectedArr" 
-        :key="item.value">
+        v-for="(item, index) in selectedOptions" 
+        :key="item.value"
+        @close="tagClose(index)"
+        closable>
         {{ item.label }}
       </ss-tag>
     </div>
@@ -79,7 +83,8 @@ export default {
       isFocus: false,
       visible: false,
       selectLabel: '',
-      selectedArr: [],
+      selectedOptions: [],
+      selectedValues: [],
       multipleHeight: null,
       menuWidth: 0
     }
@@ -92,6 +97,20 @@ export default {
   watch: {
     visible(val) {
       this.broadcast('SsDropdownMenu', 'visible', val)
+    },
+    selectedValues(val) {
+      if (val.length) {
+        this.selectLabel = ' '
+      } else {
+        this.selectLabel = ''
+      }
+      this.$nextTick(() => {
+        const clientHeight = this.$refs.multiple.clientHeight
+        if (clientHeight >= 32) {
+          this.multipleHeight = clientHeight
+          this.broadcast('SsDropdownMenu', 'update')
+        }
+      })
     }
   },
   methods: {
@@ -113,19 +132,29 @@ export default {
         this.$emit('change', option.value)
         this.$emit('input', option.value)
       } else {
-        const index = this.selectedArr.indexOf(option.value)
+        const index = this.selectedValues.indexOf(option.value)
         if (index > -1) {
-          this.selectedArr.splice(1, index)
+          this.selectedOptions.splice(index, 1)
+          this.selectedValues.splice(index, 1)
         } else {
-          this.selectedArr.push(option.value)
+          this.selectedOptions.push(option)
+          this.selectedValues.push(option.value)
         }
+        this.$emit('change', this.selectedValues)
+        this.$emit('input', this.selectedValues)
       }
     },
     setMenuWidth() {
       this.menuWidth = this.$el.clientWidth
     },
-    handleClose() {
+    close() {
       this.visible = false
+    },
+    tagClose(index) {
+      this.selectedOptions.splice(index, 1)
+      this.selectedValues.splice(index, 1)
+      this.$emit('change', this.selectedValues)
+      this.$emit('input', this.selectedValues)
     }
   }
 }
@@ -135,8 +164,10 @@ export default {
   @import '@/assets/scss/base.scss';
 
   .ss-select {
+    display: inline-block;
     position: relative;
     width: 240px;
+    max-width: 100%;
     color: #353535;
     font-size: 14px;
     &.ss-select__disabled {
@@ -148,11 +179,10 @@ export default {
     .ss-select-multiple {
       position: absolute;
       width: 100%;
-      padding: 4px 30px 4px 2px;
+      padding: 2px 30px 2px 2px;
       font-size: 0;
       box-sizing: border-box;
       z-index: 1;
-      pointer-events: none;
       .ss-tag {
         margin: 3px 0 3px 6px;
       }
